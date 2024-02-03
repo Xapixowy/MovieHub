@@ -2,7 +2,7 @@
 import { RouterView } from 'vue-router'
 import AppNavigation from '@/components/global/AppNavigation.vue'
 import HeaderLogo from '@/components/header_components/HeaderLogo.vue'
-import TvShowService from './services/firebaseService'
+import TvShowService from './services/TvShowService'
 
 // await TvShowService.addTvShow({
 //     id: 72076,

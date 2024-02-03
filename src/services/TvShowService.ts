@@ -23,7 +23,6 @@ class TvShowService {
 
     constructor(firebaseDb: Firestore) {
         this.#collection = collection(firebaseDb, 'liked_tv_shows')
-        console.log(firebaseConfig)
     }
 
     async getTvShows(): Promise<TvShow[]> {
