@@ -1,15 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import type { CollectionReference, Firestore } from 'firebase/firestore'
 import { getFirestore, collection, getDocs, addDoc, deleteDoc } from 'firebase/firestore/lite'
-
-const firebaseConfig = {
-    apiKey: 'AIzaSyBSkl7P3KyzbvxsLZHf3L8ThUeSZhencrc',
-    authDomain: 'moviehub-70752.firebaseapp.com',
-    projectId: 'moviehub-70752',
-    storageBucket: 'moviehub-70752.appspot.com',
-    messagingSenderId: '1078655309086',
-    appId: '1:1078655309086:web:78756ca705c5d1dc57650f'
-}
+import firebaseConfig from '../../firebase.config.json'
 
 const firebaseApp = initializeApp(firebaseConfig)
 const firestoreDb = getFirestore(firebaseApp)
@@ -31,6 +23,7 @@ class TvShowService {
 
     constructor(firebaseDb: Firestore) {
         this.#collection = collection(firebaseDb, 'liked_tv_shows')
+        console.log(firebaseConfig)
     }
 
     async getTvShows(): Promise<TvShow[]> {
