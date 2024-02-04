@@ -1,63 +1,35 @@
-import { initializeApp } from 'firebase/app'
-import type { CollectionReference, Firestore } from 'firebase/firestore'
-import { getFirestore, collection, getDocs, addDoc, deleteDoc } from 'firebase/firestore/lite'
-import firebaseConfig from '../../firebase.config.json'
-
-const firebaseApp = initializeApp(firebaseConfig)
-const firestoreDb = getFirestore(firebaseApp)
-
-type TvShow = {
-    id: number
-    url: string
-    name: string
-    type: string
-    genres: string[]
-    status: string
-    premiered: string
-    image?: string
-    summary: string
-}
+import type TvShowEpisode from '@/types/TvShowEpisode'
 
 class TvShowService {
-    #collection: CollectionReference
+    url: string = 'http://api.tvmaze.com/'
 
-    constructor(firebaseDb: Firestore) {
-        this.#collection = collection(firebaseDb, 'liked_tv_shows')
-    }
-
-    async getTvShows(): Promise<TvShow[]> {
-        const snapshot = await getDocs(this.#collection)
-        const tvShows: TvShow[] = snapshot.docs.map((doc) => {
-            const data = doc.data()
-            const tvShow: TvShow = {
-                id: data.id,
-                url: data.url,
-                name: data.name,
-                type: data.type,
-                genres: data.genres,
-                status: data.status,
-                premiered: data.premiered,
-                image: data.image?.medium ?? data.image?.original ?? null,
-                summary: data.summary
+    async getSchedule() {
+        const response = await fetch(`${this.url}/schedule`)
+        const data = await response.json()
+        const tvShowEpisodes = data.map((episode: any) => {
+            const tvShowEpisode: TvShowEpisode = {
+                id: episode.id,
+                name: episode.name,
+                airDate: episode.airdate,
+                airTime: episode.airtime,
+                episodeNumber: episode.number,
+                tvShow: {
+                    id: episode.show.id,
+                    url: episode.show.url,
+                    name: episode.show.name,
+                    type: episode.show.type,
+                    genres: episode.show.genres,
+                    status: episode.show.status,
+                    premiered: episode.show.premiered,
+                    image: episode.show.image?.medium ?? episode.show.image?.original ?? null,
+                    summary: episode.show.summary,
+                    isLiked: false
+                }
             }
-            return tvShow
+            return tvShowEpisode
         })
-        return tvShows
-    }
-
-    async addTvShow(tvShow: TvShow) {
-        await addDoc(this.#collection, tvShow)
-    }
-
-    async removeTvShow(tvShowId: number) {
-        const querySnapshot = await getDocs(this.#collection)
-        querySnapshot.forEach(async (doc) => {
-            const data = doc.data()
-            if (data.id === tvShowId) {
-                await deleteDoc(doc.ref)
-            }
-        })
+        return tvShowEpisodes
     }
 }
 
-export default new TvShowService(firestoreDb)
+export default new TvShowService()

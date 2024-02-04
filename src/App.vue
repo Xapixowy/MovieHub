@@ -2,6 +2,9 @@
 import { RouterView } from 'vue-router'
 import AppNavigation from '@/components/global/AppNavigation.vue'
 import HeaderLogo from '@/components/header_components/HeaderLogo.vue'
+import WrapperComponent from '@/components/ui/WrapperComponent.vue'
+import SearchBar from '@/components/header_components/SearchBar.vue'
+
 import TvShowService from './services/TvShowService'
 
 // await TvShowService.addTvShow({
@@ -23,15 +26,91 @@ import TvShowService from './services/TvShowService'
 </script>
 
 <template>
-    <header
-        class="flex gap-6 justify-between items-center pb-6 mb-6 border-b border-gray-900 dark:border-gray-50"
-    >
-        <header-logo />
-        <app-navigation />
+    <header>
+        <wrapper-component class="header__wrapper">
+            <header-logo class="header__logo" />
+            <search-bar class="header__search-bar" />
+            <app-navigation class="header__navigation" />
+        </wrapper-component>
     </header>
     <main>
         <router-view />
     </main>
+    <footer>TVSHOWROOM &copy; 2024</footer>
 </template>
 
-<style scoped></style>
+<style scoped>
+header {
+    position: sticky;
+    top: 0;
+    margin-bottom: 6rem;
+    background-color: var(--black);
+    color: var(--white);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.header__wrapper {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 6rem;
+    padding: 0.5rem;
+}
+
+.header__logo {
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+
+.header__search-bar {
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+
+.header__navigation {
+    grid-column: 3/4;
+    grid-row: 1/2;
+}
+
+main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 6rem;
+}
+
+footer {
+    padding: 1rem;
+    text-align: center;
+    background-color: var(--black);
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    box-shadow: 0 -0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (max-width: 768px) {
+    .header__wrapper {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 1rem;
+    }
+
+    .header__logo {
+        grid-column: 1/2;
+        grid-row: 1/2;
+    }
+
+    .header__search-bar {
+        grid-column: 1/3;
+        grid-row: 2/3;
+    }
+
+    .header__navigation {
+        grid-column: 2/3;
+        grid-row: 1/2;
+    }
+}
+</style>

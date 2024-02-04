@@ -1,54 +1,37 @@
 <template>
-  <div class="header-logo relative flex gap-3 justify-center items-center overflow-hidden">
-    <div class="w-8 aspect-square">
-      <Transition>
-        <component :is="logo" size="2rem" class="absolute" />
-      </Transition>
-    </div>
-    <span class="text-xl">CryptoTracker</span>
-  </div>
+    <router-link to="/" :class="classes">
+        <IconDeviceTvOld size="3rem" class="header-logo__logo" />
+        <h1 class="header-logo__text">TvShowRoom</h1>
+    </router-link>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import {
-  IconCurrencyBitcoin,
-  IconCurrencyDogecoin,
-  IconCurrencySolana,
-  IconCurrencyLitecoin
-} from '@tabler/icons-vue'
+import { RouterLink } from 'vue-router'
+import { IconDeviceTvOld } from '@tabler/icons-vue'
+import { computed } from 'vue'
 
-const logo = ref(IconCurrencyBitcoin)
+const props = defineProps({
+    class: {
+        type: String,
+        default: ''
+    }
+})
 
-const icons = [IconCurrencyBitcoin, IconCurrencyDogecoin, IconCurrencySolana, IconCurrencyLitecoin]
-
-setInterval(() => {
-  logo.value = icons[Math.floor(Math.random() * icons.length)]
-}, 2000)
+const classes = computed(() => `header-logo ${props.class}`)
 </script>
 
 <style scoped>
-.v-enter-active {
-  transition: transform 0.5s ease;
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 
-.v-enter-from {
-  transform: translateY(-100%);
-}
-
-.v-enter-to {
-  transform: translateY(0);
-}
-
-.v-leave-active {
-  transition: transform 0.5s ease;
-}
-
-.v-leave-from {
-  transform: translateY(0);
-}
-
-.v-leave-to {
-  transform: translateY(100%);
+.header-logo__logo {
+    color: var(--primary);
 }
 </style>

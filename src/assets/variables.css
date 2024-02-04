@@ -1,0 +1,13 @@
+:root {
+    --primary: #fbbf24;
+    --primary-light: #fde68a;
+    --black: #030712;
+    --white: #f9fafb;
+    --gray: #e5e7eb;
+    --dark-gray: #1f2937;
+    --red: #f87171;
+
+    --website-width: 1024px;
+
+    --font-size-base: 16px;
+}
