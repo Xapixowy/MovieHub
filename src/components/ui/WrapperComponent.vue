@@ -18,6 +18,7 @@ const classes = computed(() => `wrapper ${props.class}`)
 </script>
 <style scoped>
 .wrapper {
+    width: 100%;
     max-width: var(--website-width);
     margin: 0 auto;
 }

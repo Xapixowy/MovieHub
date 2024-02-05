@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watchEffect } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import UniversalHeading from '@/components/ui/UniversalHeading.vue'
 import NewEpisodes from '@/components/tvshows_components/NewEpisodes.vue'
@@ -37,9 +37,9 @@ const setCurrentEpisode = (episode: TvShowEpisode) => {
 
 const likeTvShow = async (tvShow: TvShow) => {
     if (tvShow.isLiked) {
-        LikedTvShowService.removeTvShow(tvShow.id)
+        await LikedTvShowService.removeTvShow(tvShow.id)
     } else {
-        LikedTvShowService.addTvShow(tvShow)
+        await LikedTvShowService.addTvShow(tvShow)
     }
     likedTvShowsArr.value = await LikedTvShowService.getTvShows()
     hydrateNewEpisodesWithLikedTvShows()
@@ -59,10 +59,6 @@ onMounted(async () => {
     likedTvShowsArr.value = await LikedTvShowService.getTvShows()
     hydrateNewEpisodesWithLikedTvShows()
     setCurrentEpisode(newEpisodesArr.value[0])
-})
-
-watchEffect(() => {
-    console.log(likedTvShowsArr.value)
 })
 </script>
 

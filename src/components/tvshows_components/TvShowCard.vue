@@ -48,6 +48,17 @@ const stripHtmlText = (html: string) => {
 </script>
 
 <style scoped>
+@keyframes fade-in {
+    from {
+        transform: translateY(-1rem);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 div.tv-show-card {
     position: relative;
     overflow: hidden;
@@ -55,6 +66,7 @@ div.tv-show-card {
     width: 16rem;
     aspect-ratio: 11 / 16;
     box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+    animation: fade-in 0.3s;
 }
 
 div.tv-show-card:hover img {
@@ -102,14 +114,18 @@ div.tv-show-card__show-name {
 div.tv-show-card__info {
     overflow-y: auto;
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: calc(100% + 2rem);
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     flex-direction: column;
     gap: 1rem;
     justify-content: space-between;
     padding: 1rem;
-    transform: translateX(-100%);
+    padding-right: 2rem;
+    transform: translateX(100%);
     transition: transform 0.3s;
     color: var(--white);
 }

@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { IconSunFilled, IconMoonFilled } from '@tabler/icons-vue'
 
-import { onMounted, ref, watch, watchEffect } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const isDarkMode = ref(false)
 
